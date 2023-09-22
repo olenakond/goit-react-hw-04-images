@@ -1,39 +1,33 @@
-import { Component } from 'react';
+import { useEffect } from 'react';
 import { Overlay, Container } from './Modal.styled';
 
-class Modal extends Component {
-  componentDidMount() {
-    document.addEventListener('keydown', this.handleEscape);
-  }
-
-  componentWillUnmount() {
-    document.removeEventListener('keydown', this.handleEscape);
-  }
-
-  handleEscape = event => {
+const Modal = ({ image, toogleModal }) => {
+  const handleEscape = event => {
     if (event.code === 'Escape') {
-      this.props.toogleModal();
+      toogleModal();
     }
   };
 
-  handleOverlayClick = e => {
+  useEffect(() => {
+    document.addEventListener('keydown', handleEscape);
+    return () => {
+      document.removeEventListener('keydown', handleEscape);
+    };
+  }, []);
+
+  const handleOverlayClick = e => {
     if (e.target === e.currentTarget) {
-      this.props.toogleModal();
+      toogleModal();
     }
   };
 
-  render() {
-    return (
-      <Overlay onClick={this.handleOverlayClick}>
-        <Container>
-          <img
-            src={this.props.image.largeImageURL}
-            alt={this.props.image.tags}
-          />
-        </Container>
-      </Overlay>
-    );
-  }
-}
+  return (
+    <Overlay onClick={handleOverlayClick}>
+      <Container>
+        <img src={image.largeImageURL} alt={image.tags} />
+      </Container>
+    </Overlay>
+  );
+};
 
 export default Modal;
