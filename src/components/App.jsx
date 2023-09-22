@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useCallback } from 'react';
 import { getImagesBySearch } from '../api/images';
 import Searchbar from './Searchbar';
 import ImageGallery from './ImageGallery';
@@ -15,7 +15,7 @@ const App = () => {
   const [page, setPage] = useState(1);
   const [totalHits, setTotalHits] = useState(0);
 
-  const fetchImages = async () => {
+  const fetchImages = useCallback(async () => {
     try {
       setIsLoading(true);
       const data = await getImagesBySearch(searchQuery, page);
@@ -35,14 +35,14 @@ const App = () => {
     } finally {
       setIsLoading(false);
     }
-  };
+  }, [searchQuery, page]);
 
   useEffect(() => {
     if (searchQuery === '') {
       return;
     }
     fetchImages();
-  }, [searchQuery, page]);
+  }, [fetchImages, searchQuery, page]);
 
   const fetchMoreImages = () => {
     setPage(prevPage => prevPage + 1);

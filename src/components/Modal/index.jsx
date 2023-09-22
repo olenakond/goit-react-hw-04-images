@@ -13,7 +13,7 @@ const Modal = ({ image, toogleModal }) => {
     return () => {
       document.removeEventListener('keydown', handleEscape);
     };
-  }, []);
+  });
 
   const handleOverlayClick = e => {
     if (e.target === e.currentTarget) {
