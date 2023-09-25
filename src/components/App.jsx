@@ -42,7 +42,7 @@ const App = () => {
       return;
     }
     fetchImages();
-  }, [fetchImages, searchQuery, page]);
+  }, [fetchImages, searchQuery]);
 
   const fetchMoreImages = () => {
     setPage(prevPage => prevPage + 1);

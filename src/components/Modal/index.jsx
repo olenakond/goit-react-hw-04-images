@@ -2,18 +2,17 @@ import { useEffect } from 'react';
 import { Overlay, Container } from './Modal.styled';
 
 const Modal = ({ image, toogleModal }) => {
-  const handleEscape = event => {
-    if (event.code === 'Escape') {
-      toogleModal();
-    }
-  };
-
   useEffect(() => {
+    const handleEscape = event => {
+      if (event.code === 'Escape') {
+        toogleModal();
+      }
+    };
     document.addEventListener('keydown', handleEscape);
     return () => {
       document.removeEventListener('keydown', handleEscape);
     };
-  });
+  }, [toogleModal]);
 
   const handleOverlayClick = e => {
     if (e.target === e.currentTarget) {
